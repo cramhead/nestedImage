@@ -1,0 +1,51 @@
+<head>
+    <meta charset="utf-8">
+    <title>nested Image</title>
+</head>
+
+<body>
+
+</body>
+
+<template name="layout">
+    <div class='layout'>
+        {{> loginButtons}} {{> yield}}
+    </div>
+</template>
+
+<template name="home">
+    <h3>Items</h3>
+    <ul>
+        {{#each items}}
+        <li>
+            {{> item}}
+        </li>
+        {{/each}}
+    </ul>
+</template>
+
+<template name="item">
+    <div class="item">
+        <div>
+            <h3>{{name}}</h3>
+        </div>
+        <div>{{creationDate}}</div>
+        {{> imageList}}
+        <div>
+            <input class='myFileInput' type="file">
+        </div>
+    </div>
+</template>
+
+<template name="imageList">
+    <h3>Images</h3>
+    <div>
+        {{#each images}}
+          ImageName: {{name}}
+          <div class='imageList'>
+              <img src="{{url store='images'}}" alt="">
+
+          </div>
+        {{/each}}
+    </div>
+</template>
