@@ -12,7 +12,7 @@ Router.map(function() {
         template: 'home',
         onBeforeAction: function() {
             this.subscribe('items');
-            //this.subscribe('images'); // uncomment to subscribe to all images
+            this.subscribe('images'); // uncomment to subscribe to all images
         }
     });
 });

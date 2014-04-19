@@ -13,6 +13,14 @@
     </div>
 </template>
 
+<template name="notFound">
+    <h3>Not Found</h3>
+</template>
+
+<template name="loading">
+    <h3>Loading</h3>
+</template>
+
 <template name="home">
     <h3>Items</h3>
     <ul>
@@ -30,22 +38,22 @@
             <h3>{{name}}</h3>
         </div>
         <div>{{creationDate}}</div>
-        {{> imageList}}
+        <h3>Images</h3>
         <div>
-            <input class='myFileInput' type="file">
+            {{> imageList this}}
+
+            <div>
+                <input class='myFileInput' type="file">
+            </div>
         </div>
     </div>
 </template>
 
 <template name="imageList">
-    <h3>Images</h3>
-    <div>
-        {{#each images}}
-          ImageName: {{name}}
-          <div class='imageList'>
-              <img src="{{url store='images'}}" alt="">
-
-          </div>
-        {{/each}}
+    {{#each images}}
+    <div class='imageList'>
+        Name: {{name}} Image:
+        <img src="{{url store='images'}}" alt="{{name}}">
     </div>
+    {{/each}}
 </template>

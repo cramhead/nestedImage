@@ -1,4 +1,4 @@
-//FS.debug = true;
+FS.debug = true;
 
 Images = new FS.Collection("images", {
     stores: [new FS.Store.FileSystem("images", {
@@ -9,6 +9,7 @@ Images = new FS.Collection("images", {
 Template.item.events({
     'change .myFileInput': function(event, template) {
         var files = event.target.files;
+        var itemId = this._id;
 
         var insertCallback = function(err, id) {
             if (err) {
@@ -22,13 +23,15 @@ Template.item.events({
         if (userId) {
             for (var i = 0, ln = files.length; i < ln; i++) {
                 var fsFile = new FS.File(files[i]);
-                fsFile.attachData(files[i]);
 
                 fsFile.metadata = {
-                    owner: userId
+                    ownerId: userId
                 };
-                Images.insert(fsFile);
-                addImageToItem(this._id, fsFile);
+
+                Images.insert(fsFile, function(error, fileObj) {
+                    if (error) throw error;
+                    addImageToItem(itemId, fsFile);
+                });
 
             }
         } else {
@@ -43,7 +46,7 @@ var addImageToItem = function(itemId, image) {
         _id: itemId
     }, {
         $addToSet: {
-            images: image
+            imageIds: image._id
         }
     }, {
         upsert: false,
@@ -58,9 +61,11 @@ var addImageToItem = function(itemId, image) {
 };
 
 // does the data need to be made accessible to the template?
-// Template.imageList.images = function(){
-//   return Images.find();
-// };
+Template.imageList.images = function() {
+    if (this && this.imageIds) {
+        return Images.find({_id: {$in: this.imageIds}})
+    }
+};
 
 
 Template.home.items = function() {
@@ -70,3 +75,5 @@ Template.home.items = function() {
         }
     });
 };
+
+

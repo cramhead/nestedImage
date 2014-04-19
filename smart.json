@@ -1,8 +1,12 @@
 {
-  "packages": {
-    "collectionFS": {},
-    "iron-router": {},
-    "bootstrap-3": {},
-    "cfs-filesystem": {}
-  }
+    "packages": {
+        "collectionFS": {},
+        "iron-router": {},
+        "bootstrap-3": {},
+        "cfs-filesystem": {},
+        "cfs-ui": {
+            "git": "https://github.com/CollectionFS/Meteor-cfs-ui.git",
+            "branch": "master"
+        }
+    }
 }
